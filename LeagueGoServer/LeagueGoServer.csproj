@@ -59,11 +59,13 @@
     </ApplicationDefinition>
     <Compile Include="Common.cs" />
     <Compile Include="Model\ClientInfo.cs" />
+    <Compile Include="Distributor.cs" />
     <Compile Include="Model\Enums.cs" />
-    <Compile Include="Model\GameConfig.cs" />
+    <Compile Include="Model\Game.cs" />
     <Compile Include="Model\GameSetting.cs" />
+    <Compile Include="Model\MovePoint.cs" />
     <Compile Include="Model\Player.cs" />
-    <Compile Include="WCF\ICallBack.cs" />
+    <Compile Include="WCF\ICallback.cs" />
     <Compile Include="WCF\IWcfService.cs" />
     <Compile Include="WCF\WcfService.cs" />
     <Page Include="MainWindow.xaml">

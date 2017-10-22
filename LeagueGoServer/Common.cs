@@ -14,8 +14,12 @@ namespace LeagueGoServer
         /// 客户端集合，键为[SessionId]；值为[ClientInfo]
         /// </summary>
         public static ConcurrentDictionary<string, ClientInfo> ClientList = new ConcurrentDictionary<string, ClientInfo>();
+        /// <summary>
+        /// 游戏集合，键为Host的[SessionId]；值为[ClientInfo]
+        /// </summary>
+        public static ConcurrentDictionary<string, Game> GameList = new ConcurrentDictionary<string, Game>();
 
-       
+
         #region 集合的增删改查
 
         /// <summary>

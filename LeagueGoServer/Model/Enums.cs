@@ -10,4 +10,17 @@ namespace LeagueGoServer.Model
     {
         AI, RealBoard, Host, Internet
     }
+
+    /// <summary>
+    /// Client的状态
+    /// </summary>
+    public enum ClientState
+    {
+        Idel, Waiting, Playing
+    }
+
+    public enum GameState
+    {
+        Waiting,Playing
+    }
 }

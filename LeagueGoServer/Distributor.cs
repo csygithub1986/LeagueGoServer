@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LeagueGoServer.Model
+namespace LeagueGoServer
 {
-    public class GameConfig
+    public class Distributor
     {
-        public List<Player> Players { get; set; }
+        public int CurrentPlayerID { get; set; }
     }
 }

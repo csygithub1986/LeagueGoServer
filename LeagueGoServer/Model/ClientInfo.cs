@@ -40,8 +40,8 @@ namespace LeagueGoServer.Model
         /// <summary>
         /// 客户端回调使用
         /// </summary>
-        public ICallBack ClientCallback { get { return m_ClientCallback; } set { if (m_ClientCallback != value) { m_ClientCallback = value; NotifyPropertyChanged("ClientCallback"); } } }
-        private ICallBack m_ClientCallback;
+        public ICallback ClientCallback { get { return m_ClientCallback; } set { if (m_ClientCallback != value) { m_ClientCallback = value; NotifyPropertyChanged("ClientCallback"); } } }
+        private ICallback m_ClientCallback;
         /// <summary>
         /// 客户端连接的通道
         /// </summary>
@@ -53,5 +53,9 @@ namespace LeagueGoServer.Model
         /// </summary>
         public DateTime HeartbeatTime { get { return m_StationID; } set { if (m_StationID != value) { m_StationID = value; NotifyPropertyChanged("StationID"); } } }
         private DateTime m_StationID;
+
+
+        public ClientState PlayingState { get { return m_PlayingState; } set { if (m_PlayingState != value) { m_PlayingState = value; NotifyPropertyChanged("PlayingState"); } } }
+        private ClientState m_PlayingState;
     }
 }

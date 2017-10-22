@@ -11,23 +11,9 @@ using LeagueGoServer.Model;
 namespace LeagueGoServer
 {
     // 注意: 使用“重构”菜单上的“重命名”命令，可以同时更改代码和配置文件中的接口名“IService1”。
-    [ServiceContract(CallbackContract = typeof(ICallBack), SessionMode = SessionMode.Required)]
+    [ServiceContract(CallbackContract = typeof(ICallback), SessionMode = SessionMode.Required)]
     public interface IWcfService
     {
-        ///// <summary>
-        ///// 客户端心跳触发
-        ///// </summary>
-        //[OperationContract]
-        //int ClientHeartbeat();
-
-
-        ///// <summary>
-        ///// 获取所有账号信息
-        ///// </summary>
-        ///// <returns></returns>
-        //[OperationContract]
-        //List<GameConfig> ClientGetAllAccount();
-
         /// <summary>
         /// 登录
         /// </summary>
@@ -36,8 +22,25 @@ namespace LeagueGoServer
         [OperationContract]
         int Login(string userName);
 
+        [OperationContract]
+        void CreateGame(Player[] players, GameSetting gameSettign);
+
 
         [OperationContract]
-        void CreateGame(Player[] players,GameSetting gameSettign);
+        void ApplyToJoinGame(string gameID, int playerID);
+
+        /// <summary>
+        /// Host发送开始游戏
+        /// </summary>
+        [OperationContract]
+        void GameStart();
+
+        /// <summary>
+        /// client提交Move
+        /// </summary>
+        /// <param name="stepNum"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        void ClientCommitMove(int stepNum, int x, int y);
     }
 }

@@ -41,6 +41,7 @@ namespace LeagueGoServer
         /// <param name="stepNum"></param>
         /// <param name="x"></param>
         /// <param name="y"></param>
+        [OperationContract]
         void ClientCommitMove(int stepNum, int x, int y);
     }
 }

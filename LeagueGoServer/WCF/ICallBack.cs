@@ -15,21 +15,22 @@ namespace LeagueGoServer
         /// </summary>
         /// <param name="game"></param>
         [OperationContract(IsOneWay = true)]
-        void AddNewGame(Game game);
+        void DistributeNewGame(Game game);
 
         /// <summary>
         /// 在登录时发送给用户所有游戏信息
         /// </summary>
         /// <param name="game"></param>
         [OperationContract(IsOneWay = true)]
-        void SendAllGameInfo(Game game);
+        void DistributeAllGameInfo(Game[] game);
 
         /// <summary>
         /// 返回给用户加入游戏的结果
         /// </summary>
         /// <param name="success">成功返回true，失败返回false（例如申请的game或player刚刚被占用或失效了）</param>
         /// <param name="game">游戏信息</param>
-        void ReturnApplyGameResult(bool success, Game game);
+        [OperationContract(IsOneWay = true)]
+        void DistributeApplyGameResult(bool success, Game game);
 
         /// <summary>
         /// 发送开始游戏
@@ -37,6 +38,10 @@ namespace LeagueGoServer
         /// <param name="blackPlayerIDs"></param>
         /// <param name="whitePlayerIDs"></param>
         /// <param name="currentPlayerID"></param>
-        void SendGameStart(int[] blackPlayerIDs, int[] whitePlayerIDs, int currentPlayerID);
+        [OperationContract(IsOneWay = true)]
+        void DistributeGameStart(int[] blackPlayerIDs, int[] whitePlayerIDs, int currentPlayerID);
+
+        [OperationContract(IsOneWay = true)]
+        void DistributeMove(int stepNum, int x, int y);
     }
 }

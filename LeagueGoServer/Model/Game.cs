@@ -33,20 +33,24 @@ namespace LeagueGoServer.Model
         /// <summary>
         /// 黑棋玩家。游戏开始后，将ID发送给client，以决定玩家的显示和落子顺序
         /// </summary>
-        public Player[] BlackPlayerIDs { get; set; }
+        private Player[] m_BlackPlayerIDs;
 
         /// <summary>
         /// 白棋玩家。游戏开始后，将ID发送给client，以决定玩家的显示和落子顺序
         /// </summary>
-        public Player[] WhitePlayerIDs { get; set; }
+        private Player[] m_WhitePlayerIDs;
 
         public Game()
+        {
+        }
+
+        public void Init()
         {
             MoveHistory = new List<MovePoint>();
             BoardState = new int[GameSetting.BoardSize * GameSetting.BoardSize];
 
-            BlackPlayerIDs = Players.Where(p => p.Color == 2).ToArray();
-            WhitePlayerIDs = Players.Where(p => p.Color == 1).ToArray();
+            m_BlackPlayerIDs = Players.Where(p => p.Color == 2).ToArray();
+            m_WhitePlayerIDs = Players.Where(p => p.Color == 1).ToArray();
             StepNum = -1;
         }
 
@@ -59,8 +63,17 @@ namespace LeagueGoServer.Model
         {
             //准备分配下一步
             StepNum++;
-            Player[] players = StepNum % 2 == 0 ? BlackPlayerIDs : WhitePlayerIDs;//2的倍数是黑棋。TODO：让子的话就不一定了
+            Player[] players = StepNum % 2 == 0 ? m_BlackPlayerIDs : m_WhitePlayerIDs;//2的倍数是黑棋。TODO：让子的话就不一定了
             CurrentPlayer = players[StepNum / 2 % players.Length];
+        }
+
+        public Player[] GetBlackPlayers()
+        {
+            return m_BlackPlayerIDs;
+        }
+        public Player[] GetWhitePlayers()
+        {
+            return m_WhitePlayerIDs;
         }
     }
 }

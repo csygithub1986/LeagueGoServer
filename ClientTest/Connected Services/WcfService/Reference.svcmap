@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="43f406e7-4090-4910-b881-0e6be578eca1" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost/LeagueGoServer/WcfService/" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="item.xsd" MetadataType="Schema" ID="86c47479-6ab7-44c8-8d4e-4c9c1743de27" SourceId="1" SourceUrl="http://localhost/LeagueGoServer/WcfService/?xsd=xsd2" />
+    <MetadataFile FileName="item1.xsd" MetadataType="Schema" ID="b9d6ca0f-1683-4076-b964-5464329ef642" SourceId="1" SourceUrl="http://localhost/LeagueGoServer/WcfService/?xsd=xsd0" />
+    <MetadataFile FileName="item.disco" MetadataType="Disco" ID="3d9db46a-bf37-426c-aad1-d1b7023b69ee" SourceId="1" SourceUrl="http://localhost/LeagueGoServer/WcfService/?disco" />
+    <MetadataFile FileName="item2.xsd" MetadataType="Schema" ID="b6c821a8-7657-48f1-be4f-52f3240e6a3a" SourceId="1" SourceUrl="http://localhost/LeagueGoServer/WcfService/?xsd=xsd3" />
+    <MetadataFile FileName="item3.xsd" MetadataType="Schema" ID="9da47cfa-072b-4566-9701-ae1a76d1af0c" SourceId="1" SourceUrl="http://localhost/LeagueGoServer/WcfService/?xsd=xsd1" />
+    <MetadataFile FileName="WcfService.wsdl" MetadataType="Wsdl" ID="27791040-112d-44af-9179-4f5dea98ca86" SourceId="1" SourceUrl="http://localhost/LeagueGoServer/WcfService/?wsdl" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

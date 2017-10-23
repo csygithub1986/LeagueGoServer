@@ -40,15 +40,17 @@ namespace LeagueGoServer
             //将此用户加入集合
             ICallback callBack = OperationContext.Current.GetCallbackChannel<ICallback>();
             //添加客户端信息到客户端集合
-            ClientInfo _info = new ClientInfo();
-            _info.SessionID = ssid;
-            _info.UserName = userName;
-            _info.ClientCallback = callBack;
-            _info.ClientChannel = OperationContext.Current.Channel;
-            _info.HeartbeatTime = DateTime.Now;
-            Common.ClientListAdd(ssid, _info);
-
+            ClientInfo currentClient = new ClientInfo();
+            currentClient.SessionID = ssid;
+            currentClient.UserName = userName;
+            currentClient.ClientCallback = callBack;
+            currentClient.ClientChannel = OperationContext.Current.Channel;
+            currentClient.HeartbeatTime = DateTime.Now;
+            Common.ClientListAdd(ssid, currentClient);
             OperationContext.Current.Channel.Closing += new EventHandler(ClientChannel_Closing);
+
+            //发送所有Game
+            currentClient.ClientCallback.DistributeAllGameInfo(Common.GameList.Values.ToArray());
             return 0;
         }
 
@@ -56,8 +58,8 @@ namespace LeagueGoServer
         /// 新建游戏
         /// </summary>
         /// <param name="players"></param>
-        /// <param name="gameSettign"></param>
-        public void CreateGame(Player[] players, GameSetting gameSettign)
+        /// <param name="gameSetting"></param>
+        public void CreateGame(Player[] players, GameSetting gameSetting)
         {
             //收到请求后，1、如果Host或Realboard在玩家列表里，添加Client信息。
             //2、添加游戏列表
@@ -73,7 +75,8 @@ namespace LeagueGoServer
                 }
             }
 
-            Game game = new Game() { Name = gameSettign.Name, GameID = sessionID, Players = players, GameSetting = gameSettign };
+            Game game = new Game() { Name = gameSetting.Name, GameID = sessionID, Players = players, GameSetting = gameSetting };
+            game.Init();
             Common.GameList.TryAdd(sessionID, game);
 
             foreach (ClientInfo c in Common.ClientList.Values)
@@ -83,7 +86,7 @@ namespace LeagueGoServer
                 Task.Factory.StartNew(() =>
                  {
                      ICallback callback = c.ClientCallback;
-                     callback.AddNewGame(game);
+                     callback.DistributeNewGame(game);
                  });
                 //}
             }
@@ -113,7 +116,7 @@ namespace LeagueGoServer
                             player.Client = currentClient;
                             foreach (var client in Common.ClientList.Values)
                             {
-                                client.ClientCallback.ReturnApplyGameResult(true, Common.GameList[gameID]);
+                                client.ClientCallback.DistributeApplyGameResult(true, Common.GameList[gameID]);
                             }
                             return;
                         }
@@ -121,7 +124,7 @@ namespace LeagueGoServer
                 }
             }
             //如果没有成功
-            currentClient.ClientCallback.ReturnApplyGameResult(false, null);
+            currentClient.ClientCallback.DistributeApplyGameResult(false, null);
         }
 
         /// <summary>
@@ -132,15 +135,16 @@ namespace LeagueGoServer
             string sessionID = OperationContext.Current.SessionId;
             ClientInfo currentClient = Common.ClientListGet(sessionID);
             Game game = Common.GameList[sessionID];
+            game.CurrentPlayer = game.GetBlackPlayers()[0];
             //Host和其他的internet玩家分开发送
             foreach (var player in Common.GameList[sessionID].Players)
             {
                 if (player.Client != null && player.Client != currentClient)
                 {
-                    player.Client.ClientCallback.SendGameStart(game.BlackPlayerIDs.Select(p => p.ID).ToArray(), game.WhitePlayerIDs.Select(p => p.ID).ToArray(), game.CurrentPlayer.ID);
+                    player.Client.ClientCallback.DistributeGameStart(game.GetBlackPlayers().Select(p => p.ID).ToArray(), game.GetWhitePlayers().Select(p => p.ID).ToArray(), game.CurrentPlayer.ID);
                 }
             }
-            currentClient.ClientCallback.SendGameStart(game.BlackPlayerIDs.Select(p => p.ID).ToArray(), game.WhitePlayerIDs.Select(p => p.ID).ToArray(), game.CurrentPlayer.ID);
+            currentClient.ClientCallback.DistributeGameStart(game.GetBlackPlayers().Select(p => p.ID).ToArray(), game.GetWhitePlayers().Select(p => p.ID).ToArray(), game.CurrentPlayer.ID);
         }
 
         public void ClientCommitMove(int stepNum, int x, int y)
@@ -148,13 +152,21 @@ namespace LeagueGoServer
             string sessionID = OperationContext.Current.SessionId;
             ClientInfo currentClient = Common.ClientListGet(sessionID);
             Game game = Common.GameList[sessionID];
-            if (game.CurrentPlayer.Client!=currentClient||game.StepNum!=stepNum)
+            if (game.CurrentPlayer.Client != currentClient || game.StepNum != stepNum)
             {
                 //不是应该提交的client提交了数据，错误。 TODO:记录日志
                 return;
             }
             game.DealArrivedMove(x, y);
             game.DistributeNextMove();
+            //转发给其他client
+            foreach (var player in Common.GameList[sessionID].Players)
+            {
+                if (player.Client != null && player.Client != currentClient)
+                {
+                    player.Client.ClientCallback.DistributeMove(stepNum, x, y);
+                }
+            }
         }
 
         #region 私有方法

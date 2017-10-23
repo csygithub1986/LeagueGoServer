@@ -59,7 +59,7 @@ namespace LeagueGoServer.Model
             MoveHistory.Add(new MovePoint() { X = x, Y = y });
         }
 
-        public void DistributeNextMove()
+        public void PrepareNextMove()
         {
             //准备分配下一步
             StepNum++;

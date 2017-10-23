@@ -12,7 +12,7 @@ namespace ClientTest
         public static List<Game> GameList;
 
         //public static List<Player> PlayerList;
-
+        public static int StepNum;
 
     }
 }

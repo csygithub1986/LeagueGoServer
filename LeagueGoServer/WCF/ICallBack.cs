@@ -42,6 +42,6 @@ namespace LeagueGoServer
         void DistributeGameStart(int[] blackPlayerIDs, int[] whitePlayerIDs, int currentPlayerID);
 
         [OperationContract(IsOneWay = true)]
-        void DistributeMove(int stepNum, int x, int y);
+        void DistributeMove(int stepNum, int x, int y, int nextPlayerID);
     }
 }

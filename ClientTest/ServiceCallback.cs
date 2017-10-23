@@ -28,9 +28,10 @@ namespace ClientTest
             Console.WriteLine("收到GameStart");
         }
 
-        public void DistributeMove(int stepNum, int x, int y)
+        public void DistributeMove(int stepNum, int x, int y, int nextPlayerID)
         {
             Console.WriteLine("收到Move");
+            Common.StepNum++;
         }
 
         public void DistributeNewGame(Game game)

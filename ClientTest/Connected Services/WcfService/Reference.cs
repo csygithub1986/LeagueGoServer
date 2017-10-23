@@ -694,7 +694,7 @@ namespace ClientTest.WcfService {
         void DistributeGameStart(int[] blackPlayerIDs, int[] whitePlayerIDs, int currentPlayerID);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWcfService/DistributeMove")]
-        void DistributeMove(int stepNum, int x, int y);
+        void DistributeMove(int stepNum, int x, int y, int nextPlayerID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]

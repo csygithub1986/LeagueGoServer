@@ -59,7 +59,7 @@ namespace ClientTest
         private void Move_Click(object sender, RoutedEventArgs e)
         {
             Console.WriteLine("Move");
-            ServiceProxy.Instance.ClientCommitMove(0, 1, 1);
+            ServiceProxy.Instance.ClientCommitMove(Common.StepNum, 1, 1);
         }
 
         private void Start_Click(object sender, RoutedEventArgs e)

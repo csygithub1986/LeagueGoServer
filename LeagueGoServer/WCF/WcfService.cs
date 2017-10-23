@@ -145,6 +145,8 @@ namespace LeagueGoServer
                 }
             }
             currentClient.ClientCallback.DistributeGameStart(game.GetBlackPlayers().Select(p => p.ID).ToArray(), game.GetWhitePlayers().Select(p => p.ID).ToArray(), game.CurrentPlayer.ID);
+            //启动游戏
+            game.PrepareNextMove();
         }
 
         public void ClientCommitMove(int stepNum, int x, int y)
@@ -158,13 +160,13 @@ namespace LeagueGoServer
                 return;
             }
             game.DealArrivedMove(x, y);
-            game.DistributeNextMove();
+            game.PrepareNextMove();
             //转发给其他client
             foreach (var player in Common.GameList[sessionID].Players)
             {
                 if (player.Client != null && player.Client != currentClient)
                 {
-                    player.Client.ClientCallback.DistributeMove(stepNum, x, y);
+                    player.Client.ClientCallback.DistributeMove(stepNum, x, y, game.StepNum);
                 }
             }
         }

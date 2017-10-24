@@ -161,10 +161,11 @@ namespace LeagueGoServer
             }
             game.DealArrivedMove(x, y);
             game.PrepareNextMove();
-            //转发给其他client
+            //发送Move相应给所有人，当前client单独发。（当前客户端走棋已经落子，但不能落下一子）
+            currentClient.ClientCallback.DistributeMove(stepNum, x, y, game.StepNum);
             foreach (var player in Common.GameList[sessionID].Players)
             {
-                if (player.Client != null && player.Client != currentClient)
+                if (player.Client != null&&player.Client!=currentClient)
                 {
                     player.Client.ClientCallback.DistributeMove(stepNum, x, y, game.StepNum);
                 }

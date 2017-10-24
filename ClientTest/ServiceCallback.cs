@@ -7,7 +7,7 @@ using ClientTest.WcfService;
 
 namespace ClientTest
 {
-    public class ServiceCallback : WcfService.IWcfServiceCallback
+    public class ServiceCallback : IWcfServiceCallback
     {
 
         public void DistributeAllGameInfo(Game[] games)

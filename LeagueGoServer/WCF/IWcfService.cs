@@ -20,7 +20,13 @@ namespace LeagueGoServer
         /// <param name="userName"></param>
         /// <returns></returns>
         [OperationContract]
-        int Login(string userName);
+        bool Login(string userName);
+
+        /// <summary>
+        /// 请求所有列表
+        /// </summary>
+        [OperationContract]
+        void GetAllGames();
 
         [OperationContract]
         void CreateGame(Player[] players, GameSetting gameSettign);

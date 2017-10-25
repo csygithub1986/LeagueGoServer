@@ -10,6 +10,15 @@ namespace LeagueGoServer
 {
     public class Common
     {
+        static Common()
+        {
+            Player p1 = new Player() { Name = "王", Color = 2, Type = PlayerType.Host, ID = 1 };
+            Player p2 = new Player() { Name = "李", Color = 2, Type = PlayerType.AI, ID = 2 };
+            Player p3 = new Player() { Name = "刘", Color = 1, Type = PlayerType.Internet, ID = 3 };
+            Player p4 = new Player() { Name = "林", Color = 1, Type = PlayerType.Internet, ID = 4 };
+            GameList.TryAdd("1111", new Game() { Name = "bbb", Players = new Player[] { p1, p2, p3, p4 }, GameSetting = new GameSetting() { BoardSize = 19, Handicap = 4, Komi = 0 } });
+        }
+
         /// <summary>
         /// 客户端集合，键为[SessionId]；值为[ClientInfo]
         /// </summary>

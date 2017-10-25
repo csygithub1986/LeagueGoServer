@@ -26,7 +26,7 @@ namespace LeagueGoServer
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public int Login(string userName)
+        public bool Login(string userName)
         {
             string ssid = OperationContext.Current.SessionId;
             //获取传进的消息属性  
@@ -51,7 +51,17 @@ namespace LeagueGoServer
 
             //发送所有Game
             currentClient.ClientCallback.DistributeAllGameInfo(Common.GameList.Values.ToArray());
-            return 0;
+            return true;
+        }
+
+        /// <summary>
+        /// 请求所有游戏列表
+        /// </summary>
+        public void GetAllGames()
+        {
+            string sessionID = OperationContext.Current.SessionId;
+            ClientInfo client = Common.ClientListGet(sessionID);
+            client.ClientCallback.DistributeAllGameInfo(Common.GameList.Values.ToArray());
         }
 
         /// <summary>
@@ -165,7 +175,7 @@ namespace LeagueGoServer
             currentClient.ClientCallback.DistributeMove(stepNum, x, y, game.StepNum);
             foreach (var player in Common.GameList[sessionID].Players)
             {
-                if (player.Client != null&&player.Client!=currentClient)
+                if (player.Client != null && player.Client != currentClient)
                 {
                     player.Client.ClientCallback.DistributeMove(stepNum, x, y, game.StepNum);
                 }
